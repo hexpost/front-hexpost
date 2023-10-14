@@ -21,24 +21,27 @@ import { Spinner } from "@/components/local/spinner";
 import { api } from "@/api/api";
 import { useRouter } from "next/router";
 
-interface ILoginResponse {
+interface IRegisterResponse {
     data: {
         token: string;
     };
 }
 
-export default function Login() {
+export default function Register() {
     const [password, setPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [username, setUsername] = useState<string>("");
     const [disabledButton, setDisabled] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
     const [warning, setWarning] = useState<string>("");
+
     const [passwordInputType, setPasswordInputType] =
         useState<string>("password");
 
     useEffect(() => {
         validationFields();
-    }, [password, email]);
+    }, [password, email, username, confirmPassword]);
 
     useEffect(() => {
         const validantion = validationFields();
@@ -52,15 +55,30 @@ export default function Login() {
     }, [loading]);
 
     const validationFields = () => {
-        if (password.length > 0 && email.length > 0) {
+        if (
+            password.length > 0 &&
+            email.length > 0 &&
+            username.length > 0 &&
+            confirmPassword.length > 0
+        ) {
             const schema = z.object({
+                username: z.string().min(3, { message: "Nome muito curto" }),
                 email: z.string().email({ message: "Email inválido" }),
-                password: z.string().min(5, { message: "Senha inválida" }),
+                password: z.string().min(5, { message: "Senha muito curta" }),
+                confirmPassword: z.string().min(5, {
+                    message: "Senhas não coincidem",
+                }),
             });
 
-            const check: any = schema.safeParse({ email, password }).success;
+            const check: any = schema.safeParse({
+                email,
+                password,
+                username,
+                confirmPassword,
+            });
 
-            if (check) {
+            if (check.success) {
+                setWarning("");
                 setDisabled(false);
                 return true;
             }
@@ -78,23 +96,18 @@ export default function Login() {
         setPasswordInputType("password");
     };
 
-    const handleLogin = async () => {
+    const handleRegister = async () => {
         const validation = validationFields();
         if (validation) {
             setLoading(true);
             try {
-                const token: ILoginResponse = await api.post("/users/login", {
+                const token: IRegisterResponse = await api.post("/users", {
                     email,
                     password,
+                    username,
                 });
-                console.log(token.data.token);
-                localStorage.setItem("token", token.data.token);
-                window.location.href = "/";
             } catch (err) {
-                setWarning("Credenciais invalidas");
-                setTimeout(() => {
-                    setWarning("");
-                }, 3000);
+                setWarning("Erro ao cadastrar");
             }
             setLoading(false);
         }
@@ -110,14 +123,30 @@ export default function Login() {
                             src={logo_transparente}
                             className="w-[150px] h-[150px]"
                         />
-                        <CardTitle>Logue em sua conta</CardTitle>
+                        <CardTitle>Crie sua conta</CardTitle>
                         <CardDescription className="text-center">
-                            Digite suas credenciais nos campos abaixo:
+                            Preencha os campos abaixo:
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div>
                             <div className="grid w-full items-center gap-4">
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label
+                                        htmlFor="name"
+                                        className="font-montserrat font-bold"
+                                    >
+                                        Username
+                                    </Label>
+                                    <Input
+                                        id="username"
+                                        placeholder="Digite seu username"
+                                        className="font-montserrat text-xl px-4 py-6"
+                                        onChange={(e) =>
+                                            setUsername(e.target.value)
+                                        }
+                                    />
+                                </div>
                                 <div className="flex flex-col space-y-1.5">
                                     <Label
                                         htmlFor="name"
@@ -146,7 +175,13 @@ export default function Login() {
                                             id="password"
                                             placeholder="Digite sua senha"
                                             type={passwordInputType}
-                                            className="font-montserrat text-xl px-4 py-6"
+                                            className={`font-montserrat text-xl px-4 py-6 ${
+                                                password &&
+                                                confirmPassword &&
+                                                confirmPassword != password
+                                                    ? "border-red-500"
+                                                    : ""
+                                            }`}
                                             onChange={(e) =>
                                                 setPassword(e.target.value)
                                             }
@@ -163,6 +198,33 @@ export default function Login() {
                                                 <Eye />
                                             )}
                                         </Button>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label
+                                        htmlFor="name"
+                                        className="font-montserrat font-bold"
+                                    >
+                                        Digite sua senha novamente
+                                    </Label>
+                                    <div className="flex flex-row items-center justify-center gap-2">
+                                        <Input
+                                            id="password"
+                                            placeholder="Confirme sua senha"
+                                            type={"password"}
+                                            className={`font-montserrat text-xl px-4 py-6  ${
+                                                password &&
+                                                confirmPassword &&
+                                                confirmPassword != password
+                                                    ? "border-red-500"
+                                                    : ""
+                                            }`}
+                                            onChange={(e) =>
+                                                setConfirmPassword(
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +244,7 @@ export default function Login() {
                                     window.location.href = "/register";
                                 }}
                             >
-                                Criar conta
+                                Login
                             </Button>
                             <Button variant="ghost" className="font-montserrat">
                                 Recuperar senha
@@ -191,14 +253,14 @@ export default function Login() {
                         <Button
                             className="text-white font-montserrat font-bold p-4 text-xl sm:w-[150px] w-full"
                             disabled={disabledButton}
-                            onClick={handleLogin}
+                            onClick={handleRegister}
                         >
                             {loading ? (
                                 <Spinner />
                             ) : (
                                 <>
-                                    <ChevronsRight className="mr-2" size={25} />
-                                    Logar
+                                    <ChevronsRight size={25} />
+                                    Cadastrar
                                 </>
                             )}
                         </Button>
