@@ -19,7 +19,9 @@ import { useState, useEffect } from "react";
 import * as z from "zod";
 import { Spinner } from "@/components/local/spinner";
 import { api } from "@/api/api";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { GetTokenAndValid } from "@/utils/getTokenAndValid";
 
 interface ILoginResponse {
     data: {
@@ -28,6 +30,7 @@ interface ILoginResponse {
 }
 
 export default function Login() {
+    const router = useRouter();
     const [password, setPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [disabledButton, setDisabled] = useState<boolean>(true);
@@ -51,16 +54,35 @@ export default function Login() {
         }
     }, [loading]);
 
+    useEffect(() => {
+        const checkToken = localStorage.getItem("hxptoken");
+        if (checkToken) {
+            ValidToken();
+        }
+    }, []);
+
+    const ValidToken = async () => {
+        const validToken = await GetTokenAndValid();
+        if (validToken) {
+            router.push("/");
+        }
+    };
+
     const validationFields = () => {
         if (password.length > 0 && email.length > 0) {
             const schema = z.object({
-                email: z.string().email({ message: "Email inválido" }),
-                password: z.string().min(5, { message: "Senha inválida" }),
+                email: z
+                    .string()
+                    .email({ message: "Email no formato inválido" }),
+                password: z
+                    .string()
+                    .min(5, { message: "Senha no formato inválido" }),
             });
 
-            const check: any = schema.safeParse({ email, password }).success;
+            const check: any = schema.safeParse({ email, password });
 
-            if (check) {
+            if (check.success) {
+                setWarning("");
                 setDisabled(false);
                 return true;
             }
@@ -88,8 +110,8 @@ export default function Login() {
                     password,
                 });
                 console.log(token.data.token);
-                localStorage.setItem("token", token.data.token);
-                window.location.href = "/";
+                localStorage.setItem("hxptoken", token.data.token);
+                router.push("/");
             } catch (err) {
                 setWarning("Credenciais invalidas");
                 setTimeout(() => {
@@ -103,7 +125,7 @@ export default function Login() {
     return (
         <main className="w-full h-screen relative">
             <div className="w-full h-full overflow-hidden flex items-center justify-center dark:bg-zinc-800 bg-white">
-                <Card className="sm:w-[500px] w-[95%] shadow-2xl border-primary">
+                <Card className="sm:w-[500px] w-[95%] shadow-3xlLight dark:shadow-3xlDark border-primary">
                     <CardHeader className="w-full flex items-center justify-center">
                         <Image
                             alt="logo do hexpost"
@@ -175,21 +197,21 @@ export default function Login() {
 
                     <CardFooter className="flex sm:justify-between justify-center sm:gap-0 gap-6 sm:flex-row flex-col">
                         <div>
-                            <Button
-                                variant="ghost"
-                                className="font-montserrat"
-                                onClick={() => {
-                                    window.location.href = "/register";
-                                }}
-                            >
-                                Criar conta
-                            </Button>
+                            <Link href="/register">
+                                <Button
+                                    variant="ghost"
+                                    className="font-montserrat"
+                                >
+                                    Criar conta
+                                </Button>
+                            </Link>
+
                             <Button variant="ghost" className="font-montserrat">
                                 Recuperar senha
                             </Button>
                         </div>
                         <Button
-                            className="text-white font-montserrat font-bold p-4 text-xl sm:w-[150px] w-full"
+                            className="text-white font-montserrat font-bold p-4 text-xl sm:w-[150px] w-full transition-all  hover:shadow-shadowButton"
                             disabled={disabledButton}
                             onClick={handleLogin}
                         >

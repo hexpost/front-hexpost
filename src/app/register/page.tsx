@@ -19,7 +19,9 @@ import { useState, useEffect } from "react";
 import * as z from "zod";
 import { Spinner } from "@/components/local/spinner";
 import { api } from "@/api/api";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { GetTokenAndValid } from "@/utils/getTokenAndValid";
 
 interface IRegisterResponse {
     data: {
@@ -28,6 +30,7 @@ interface IRegisterResponse {
 }
 
 export default function Register() {
+    const router = useRouter();
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -53,6 +56,20 @@ export default function Register() {
             }
         }
     }, [loading]);
+
+    useEffect(() => {
+        const checkToken = localStorage.getItem("hxptoken");
+        if (checkToken) {
+            ValidToken();
+        }
+    }, []);
+
+    const ValidToken = async () => {
+        const validToken = await GetTokenAndValid();
+        if (validToken) {
+            router.push("/");
+        }
+    };
 
     const validationFields = () => {
         if (
@@ -106,6 +123,8 @@ export default function Register() {
                     password,
                     username,
                 });
+                console.log(token);
+                router.push("/login");
             } catch (err) {
                 setWarning("Erro ao cadastrar");
             }
@@ -116,7 +135,7 @@ export default function Register() {
     return (
         <main className="w-full h-screen relative">
             <div className="w-full h-full overflow-hidden flex items-center justify-center dark:bg-zinc-800 bg-white">
-                <Card className="sm:w-[500px] w-[95%] shadow-2xl border-primary">
+                <Card className="sm:w-[500px] w-[95%] shadow-3xlLight dark:shadow-3xlDark border-primary">
                     <CardHeader className="w-full flex items-center justify-center">
                         <Image
                             alt="logo do hexpost"
@@ -237,21 +256,21 @@ export default function Register() {
 
                     <CardFooter className="flex sm:justify-between justify-center sm:gap-0 gap-6 sm:flex-row flex-col">
                         <div>
-                            <Button
-                                variant="ghost"
-                                className="font-montserrat"
-                                onClick={() => {
-                                    window.location.href = "/register";
-                                }}
-                            >
-                                Login
-                            </Button>
+                            <Link href="/login">
+                                <Button
+                                    variant="ghost"
+                                    className="font-montserrat"
+                                >
+                                    Login
+                                </Button>
+                            </Link>
+
                             <Button variant="ghost" className="font-montserrat">
                                 Recuperar senha
                             </Button>
                         </div>
                         <Button
-                            className="text-white font-montserrat font-bold p-4 text-xl sm:w-[150px] w-full"
+                            className="text-white font-montserrat font-bold p-4 text-xl sm:w-[150px] w-full transition-all  hover:shadow-shadowButton"
                             disabled={disabledButton}
                             onClick={handleRegister}
                         >

@@ -74,6 +74,11 @@ module.exports = {
             fontFamily: {
                 montserrat: ["'Montserrat'", "sans-serif"],
             },
+            boxShadow: {
+                "3xlDark": "0 -10px 300px 10px #4a1b7a",
+                "3xlLight": "0 -10px 300px 10px #a95afa",
+                shadowButton: "0 0px 10px 0.1px #a95afa",
+            },
         },
     },
     plugins: [require("tailwindcss-animate")],
