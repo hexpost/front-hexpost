@@ -32,25 +32,25 @@ export const Header = () => {
     }, []);
 
     return (
-        <div className="w-full flex h-[75px] dark:bg-zinc-800 bg-zinc-300 items-center justify-around border-b border-primary">
-            <div className="w-1/3  h-full flex items-center justify-center">
+        <div className="w-full flex lg:h-[75px] h-auto dark:bg-zinc-800 bg-zinc-300 items-center justify-around border-b border-primary flex-wrap lg:gap-0 gap-4 lg:p-0 p-4">
+            <div className="lg:w-1/3 w-full  h-full flex items-center justify-center">
                 {" "}
                 <Image
                     alt="logo do hexpost"
                     src={logo}
-                    className="w-auto h-full border-primary"
+                    className="lg:w-auto lg:h-full w-[100px] h-[100px] border-primary"
                 />
             </div>
 
-            <div className="w-1/3 h-full  flex items-center justify-center">
-                <NavigationMenu className="w-full flex items-center justify-center">
-                    <NavigationMenuList>
-                        <NavigationMenuItem>
-                            <NavigationMenuTrigger className="border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
+            <div className="lg:w-1/3 w-full h-full  flex items-center justify-center flex-wrap">
+                <NavigationMenu className="w-full flex items-center justify-center flex-wrap">
+                    <NavigationMenuList className="lg:flex-row lg:flex-nowrap flex-wrap gap-2">
+                        <NavigationMenuItem className="lg:w-auto w-full">
+                            <NavigationMenuTrigger className="w-full border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
                                 Navegar
                             </NavigationMenuTrigger>
                             <NavigationMenuContent>
-                                <div className="w-[400px] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
+                                <div className="sm:w-[400px] w-[92vw] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
                                     <div className="w-full h-[150px]  bg-gradient-to-t dark:from-zinc-900 dark:to-primary from-zinc-400 dark:from-10% from-2% to-primary rounded flex items-center p-4 flex-row gap-4">
                                         <Image
                                             alt="logo do hexpost"
@@ -93,12 +93,12 @@ export const Header = () => {
                                 </div>
                             </NavigationMenuContent>
                         </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuTrigger className="border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
+                        <NavigationMenuItem className="lg:w-auto w-full">
+                            <NavigationMenuTrigger className="w-full border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
                                 Sobre
                             </NavigationMenuTrigger>
                             <NavigationMenuContent>
-                                <div className="w-[400px] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
+                                <div className="sm:w-[400px] w-[92vw] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
                                     <Separator className="bg-zinc-700 w-full" />
                                     <Button
                                         variant={"ghost"}
@@ -109,12 +109,12 @@ export const Header = () => {
                                 </div>
                             </NavigationMenuContent>
                         </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuTrigger className="border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
+                        <NavigationMenuItem className="lg:w-auto w-full">
+                            <NavigationMenuTrigger className="w-full border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
                                 Configurações
                             </NavigationMenuTrigger>
                             <NavigationMenuContent>
-                                <div className="w-[400px] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
+                                <div className="sm:w-[400px] w-[92vw] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
                                     <div className="w-full  dark:bg-zinc-900 bg-zinc-400 rounded flex  p-4 flex-row flex-wrap gap-4">
                                         <div className="dark:bg-zinc-800 bg-zinc-300 p-4 rounded w-full ">
                                             <Label>Trocar tema: </Label>
@@ -139,7 +139,7 @@ export const Header = () => {
                 </NavigationMenu>
             </div>
             {!logged ? (
-                <div className="w-1/3 h-full flex flex-row gap-4 items-center justify-center">
+                <div className="lg:w-1/3 w-full h-full flex flex-row gap-4 items-center justify-center">
                     <Link href={"/login"} className="font-montserrat font-bold">
                         Login
                     </Link>
@@ -151,10 +151,10 @@ export const Header = () => {
                     </Button>
                 </div>
             ) : (
-                <div className="w-1/3 h-full flex flex-row gap-4 items-center justify-center">
+                <div className="lg:w-1/3 w-full h-full flex flex-row gap-4 items-center justify-center">
                     <Button
                         variant={"ghost"}
-                        className="w-auto dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg p-4"
+                        className="lg:w-auto w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg p-4"
                     >
                         <User2 className="mr-4" />
                         Perfil
