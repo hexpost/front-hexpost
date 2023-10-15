@@ -19,9 +19,17 @@ import { Hammer, Home, Newspaper, User2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { SwitchTheme } from "../switchTheme";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const Header = () => {
+    const [logged, setLogged] = useState<boolean>(false);
     const router = useRouter();
+
+    useEffect(() => {
+        if (localStorage.getItem("hxptoken")) {
+            setLogged(true);
+        }
+    }, []);
 
     return (
         <div className="w-full flex h-[75px] dark:bg-zinc-800 bg-zinc-300 items-center justify-around border-b border-primary">
@@ -130,7 +138,7 @@ export const Header = () => {
                     </NavigationMenuList>
                 </NavigationMenu>
             </div>
-            {!localStorage.getItem("hxptoken") ? (
+            {!logged ? (
                 <div className="w-1/3 h-full flex flex-row gap-4 items-center justify-center">
                     <Link href={"/login"} className="font-montserrat font-bold">
                         Login
