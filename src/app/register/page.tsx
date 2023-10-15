@@ -22,6 +22,8 @@ import { api } from "@/api/api";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { GetTokenAndValid } from "@/utils/getTokenAndValid";
+import { useScreenLoading } from "@/components/local/ScreenLoading";
+import { ScreenLoadingUnique } from "@/components/local/ScreenLoadingUnique";
 
 interface IRegisterResponse {
     data: {
@@ -38,6 +40,8 @@ export default function Register() {
     const [disabledButton, setDisabled] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
     const [warning, setWarning] = useState<string>("");
+    const [validated, setValidated] = useState<boolean>(true);
+    const { ScreenLoading, startLoading, stopLoading } = useScreenLoading();
 
     const [passwordInputType, setPasswordInputType] =
         useState<string>("password");
@@ -48,6 +52,7 @@ export default function Register() {
 
     useEffect(() => {
         const validantion = validationFields();
+
         if (validantion) {
             if (loading == true) {
                 setDisabled(true);
@@ -61,6 +66,8 @@ export default function Register() {
         const checkToken = localStorage.getItem("hxptoken");
         if (checkToken) {
             ValidToken();
+        } else {
+            setValidated(false);
         }
     }, []);
 
@@ -68,7 +75,9 @@ export default function Register() {
         const validToken = await GetTokenAndValid();
         if (validToken) {
             router.push("/");
+            return;
         }
+        setValidated(false);
     };
 
     const validationFields = () => {
@@ -133,162 +142,178 @@ export default function Register() {
     };
 
     return (
-        <main className="w-full h-screen relative">
-            <div className="w-full h-full overflow-hidden flex items-center justify-center dark:bg-zinc-800 bg-white">
-                <Card className="sm:w-[500px] w-[95%] shadow-3xlLight dark:shadow-3xlDark border-primary">
-                    <CardHeader className="w-full flex items-center justify-center">
-                        <Image
-                            alt="logo do hexpost"
-                            src={logo_transparente}
-                            className="w-[150px] h-[150px]"
-                        />
-                        <CardTitle>Crie sua conta</CardTitle>
-                        <CardDescription className="text-center">
-                            Preencha os campos abaixo:
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div>
-                            <div className="grid w-full items-center gap-4">
-                                <div className="flex flex-col space-y-1.5">
-                                    <Label
-                                        htmlFor="name"
-                                        className="font-montserrat font-bold"
-                                    >
-                                        Username
-                                    </Label>
-                                    <Input
-                                        id="username"
-                                        placeholder="Digite seu username"
-                                        className="font-montserrat text-xl px-4 py-6"
-                                        onChange={(e) =>
-                                            setUsername(e.target.value)
-                                        }
-                                    />
+        <>
+            {validated ? (
+                <ScreenLoadingUnique />
+            ) : (
+                <main className="w-full h-screen relative">
+                    <ScreenLoading />
+                    <div className="w-full h-full overflow-hidden flex items-center justify-center dark:bg-zinc-800 bg-white">
+                        <Card className="sm:w-[500px] w-[95%] shadow-4xlight dark:shadow-3xlDark border-primary">
+                            <CardHeader className="w-full flex items-center justify-center">
+                                <Image
+                                    alt="logo do hexpost"
+                                    src={logo_transparente}
+                                    className="w-[150px] h-[150px]"
+                                />
+                                <CardTitle>Crie sua conta</CardTitle>
+                                <CardDescription className="text-center">
+                                    Preencha os campos abaixo:
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <div className="grid w-full items-center gap-4">
+                                        <div className="flex flex-col space-y-1.5">
+                                            <Label
+                                                htmlFor="name"
+                                                className="font-montserrat font-bold"
+                                            >
+                                                Username
+                                            </Label>
+                                            <Input
+                                                id="username"
+                                                placeholder="Digite seu username"
+                                                className="font-montserrat text-xl px-4 py-6"
+                                                onChange={(e) =>
+                                                    setUsername(e.target.value)
+                                                }
+                                            />
+                                        </div>
+                                        <div className="flex flex-col space-y-1.5">
+                                            <Label
+                                                htmlFor="name"
+                                                className="font-montserrat font-bold"
+                                            >
+                                                Email
+                                            </Label>
+                                            <Input
+                                                id="email"
+                                                placeholder="Digite seu email"
+                                                className="font-montserrat text-xl px-4 py-6"
+                                                onChange={(e) =>
+                                                    setEmail(e.target.value)
+                                                }
+                                            />
+                                        </div>
+                                        <div className="flex flex-col space-y-1.5">
+                                            <Label
+                                                htmlFor="name"
+                                                className="font-montserrat font-bold"
+                                            >
+                                                Password
+                                            </Label>
+                                            <div className="flex flex-row items-center justify-center gap-2">
+                                                <Input
+                                                    id="password"
+                                                    placeholder="Digite sua senha"
+                                                    type={passwordInputType}
+                                                    className={`font-montserrat text-xl px-4 py-6 ${
+                                                        password &&
+                                                        confirmPassword &&
+                                                        confirmPassword !=
+                                                            password
+                                                            ? "border-red-500"
+                                                            : ""
+                                                    }`}
+                                                    onChange={(e) =>
+                                                        setPassword(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                                <Button
+                                                    variant={"ghost"}
+                                                    className="px-4 py-6 text-xl"
+                                                    onClick={
+                                                        toggleTypePasswordInput
+                                                    }
+                                                >
+                                                    {passwordInputType ===
+                                                    "password" ? (
+                                                        <EyeOff />
+                                                    ) : (
+                                                        <Eye />
+                                                    )}
+                                                </Button>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col space-y-1.5">
+                                            <Label
+                                                htmlFor="name"
+                                                className="font-montserrat font-bold"
+                                            >
+                                                Digite sua senha novamente
+                                            </Label>
+                                            <div className="flex flex-row items-center justify-center gap-2">
+                                                <Input
+                                                    id="password"
+                                                    placeholder="Confirme sua senha"
+                                                    type={"password"}
+                                                    className={`font-montserrat text-xl px-4 py-6  ${
+                                                        password &&
+                                                        confirmPassword &&
+                                                        confirmPassword !=
+                                                            password
+                                                            ? "border-red-500"
+                                                            : ""
+                                                    }`}
+                                                    onChange={(e) =>
+                                                        setConfirmPassword(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="flex flex-col space-y-1.5">
-                                    <Label
-                                        htmlFor="name"
-                                        className="font-montserrat font-bold"
-                                    >
-                                        Email
-                                    </Label>
-                                    <Input
-                                        id="email"
-                                        placeholder="Digite seu email"
-                                        className="font-montserrat text-xl px-4 py-6"
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
-                                    />
-                                </div>
-                                <div className="flex flex-col space-y-1.5">
-                                    <Label
-                                        htmlFor="name"
-                                        className="font-montserrat font-bold"
-                                    >
-                                        Password
-                                    </Label>
-                                    <div className="flex flex-row items-center justify-center gap-2">
-                                        <Input
-                                            id="password"
-                                            placeholder="Digite sua senha"
-                                            type={passwordInputType}
-                                            className={`font-montserrat text-xl px-4 py-6 ${
-                                                password &&
-                                                confirmPassword &&
-                                                confirmPassword != password
-                                                    ? "border-red-500"
-                                                    : ""
-                                            }`}
-                                            onChange={(e) =>
-                                                setPassword(e.target.value)
-                                            }
-                                        />
+                            </CardContent>
+
+                            <CardDescription className="mb-4 flex flex-row items-center justify-center gap-2 text-red-500">
+                                {warning}
+                            </CardDescription>
+
+                            <CardFooter className="flex sm:justify-between justify-center sm:gap-0 gap-6 sm:flex-row flex-col">
+                                <div>
+                                    <Link href="/login">
                                         <Button
-                                            variant={"ghost"}
-                                            className="px-4 py-6 text-xl"
-                                            onClick={toggleTypePasswordInput}
+                                            variant="ghost"
+                                            className="font-montserrat"
                                         >
-                                            {passwordInputType ===
-                                            "password" ? (
-                                                <EyeOff />
-                                            ) : (
-                                                <Eye />
-                                            )}
+                                            Login
                                         </Button>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col space-y-1.5">
-                                    <Label
-                                        htmlFor="name"
-                                        className="font-montserrat font-bold"
+                                    </Link>
+
+                                    <Button
+                                        variant="ghost"
+                                        className="font-montserrat"
                                     >
-                                        Digite sua senha novamente
-                                    </Label>
-                                    <div className="flex flex-row items-center justify-center gap-2">
-                                        <Input
-                                            id="password"
-                                            placeholder="Confirme sua senha"
-                                            type={"password"}
-                                            className={`font-montserrat text-xl px-4 py-6  ${
-                                                password &&
-                                                confirmPassword &&
-                                                confirmPassword != password
-                                                    ? "border-red-500"
-                                                    : ""
-                                            }`}
-                                            onChange={(e) =>
-                                                setConfirmPassword(
-                                                    e.target.value
-                                                )
-                                            }
-                                        />
-                                    </div>
+                                        Recuperar senha
+                                    </Button>
                                 </div>
-                            </div>
-                        </div>
-                    </CardContent>
-
-                    <CardDescription className="mb-4 flex flex-row items-center justify-center gap-2 text-red-500">
-                        {warning}
-                    </CardDescription>
-
-                    <CardFooter className="flex sm:justify-between justify-center sm:gap-0 gap-6 sm:flex-row flex-col">
-                        <div>
-                            <Link href="/login">
                                 <Button
-                                    variant="ghost"
-                                    className="font-montserrat"
+                                    className="text-white font-montserrat font-bold p-4 text-xl sm:w-[150px] w-full transition-all  hover:shadow-shadowButton"
+                                    disabled={disabledButton}
+                                    onClick={handleRegister}
                                 >
-                                    Login
+                                    {loading ? (
+                                        <Spinner />
+                                    ) : (
+                                        <>
+                                            <ChevronsRight size={25} />
+                                            Cadastrar
+                                        </>
+                                    )}
                                 </Button>
-                            </Link>
-
-                            <Button variant="ghost" className="font-montserrat">
-                                Recuperar senha
-                            </Button>
-                        </div>
-                        <Button
-                            className="text-white font-montserrat font-bold p-4 text-xl sm:w-[150px] w-full transition-all  hover:shadow-shadowButton"
-                            disabled={disabledButton}
-                            onClick={handleRegister}
-                        >
-                            {loading ? (
-                                <Spinner />
-                            ) : (
-                                <>
-                                    <ChevronsRight size={25} />
-                                    Cadastrar
-                                </>
-                            )}
-                        </Button>
-                    </CardFooter>
-                </Card>
-            </div>
-            <div className=" absolute top-4 right-4">
-                <SwitchTheme />
-            </div>
-        </main>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                    <div className=" absolute top-4 right-4">
+                        <SwitchTheme />
+                    </div>
+                </main>
+            )}
+        </>
     );
 }

@@ -76,7 +76,7 @@ module.exports = {
             },
             boxShadow: {
                 "3xlDark": "0 -10px 300px 10px #4a1b7a",
-                "3xlLight": "0 -10px 300px 10px #a95afa",
+                "4xlight": "0 -10px 300px 10px #a64fff",
                 shadowButton: "0 0px 10px 0.1px #a95afa",
             },
         },
