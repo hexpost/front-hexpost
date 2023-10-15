@@ -21,7 +21,7 @@ import { SwitchTheme } from "../switchTheme";
 
 export const Header = () => {
     return (
-        <div className="w-full flex h-[75px] bg-zinc-800 items-center justify-around border-b border-primary">
+        <div className="w-full flex h-[75px] dark:bg-zinc-800 bg-zinc-300 items-center justify-around border-b border-primary">
             <Image
                 alt="logo do hexpost"
                 src={logo}
@@ -30,12 +30,12 @@ export const Header = () => {
             <NavigationMenu className="w-full">
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <NavigationMenuTrigger className="border-transparent hover:border-primary border font-montserrat font-bold text-xl data-[active]:bg-zinc-900 data-[state=open]:bg-zinc-900">
+                        <NavigationMenuTrigger className="border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
                             Navegar
                         </NavigationMenuTrigger>
                         <NavigationMenuContent>
-                            <div className="w-[400px] h-[350px] p-2 bg-zinc-800 border-2 border-zinc-900 flex flex-col gap-2 items-center ">
-                                <div className="w-full h-[150px]  bg-gradient-to-t from-zinc-900 from-10% to-primary rounded flex items-center p-4 flex-row gap-4">
+                            <div className="w-[400px] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
+                                <div className="w-full h-[150px]  bg-gradient-to-t dark:from-zinc-900 dark:to-primary from-zinc-400 dark:from-10% from-2% to-primary rounded flex items-center p-4 flex-row gap-4">
                                     <Image
                                         alt="logo do hexpost"
                                         src={logo}
@@ -52,24 +52,24 @@ export const Header = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <Separator className="bg-zinc-700 w-full" />
+                                <Separator className="dark:bg-zinc-700 bg-zinc-400 w-full" />
                                 <Button
                                     variant={"ghost"}
-                                    className="w-full bg-zinc-700 hover:bg-zinc-700 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                    className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
                                 >
                                     <Home className="mr-4" />
                                     Pagina inicial
                                 </Button>
                                 <Button
                                     variant={"ghost"}
-                                    className="w-full bg-zinc-700 hover:bg-zinc-700 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                    className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
                                 >
                                     <Newspaper className="mr-4" />
                                     Novidades
                                 </Button>
                                 <Button
                                     variant={"ghost"}
-                                    className="w-full bg-zinc-700 hover:bg-zinc-700 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                    className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
                                 >
                                     <User2 className="mr-4" /> Contribuidores
                                 </Button>
@@ -77,15 +77,15 @@ export const Header = () => {
                         </NavigationMenuContent>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                        <NavigationMenuTrigger className="border-transparent hover:border-primary border font-montserrat font-bold text-xl data-[active]:bg-zinc-900 data-[state=open]:bg-zinc-900">
+                        <NavigationMenuTrigger className="border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
                             Sobre
                         </NavigationMenuTrigger>
                         <NavigationMenuContent>
-                            <div className="w-[400px] h-[350px] p-2 bg-zinc-800 border-2 border-zinc-900 flex flex-col gap-2 items-center ">
+                            <div className="w-[400px] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
                                 <Separator className="bg-zinc-700 w-full" />
                                 <Button
                                     variant={"ghost"}
-                                    className="w-full bg-zinc-700 hover:bg-zinc-700 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                    className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
                                 >
                                     Quem somos?
                                 </Button>
@@ -93,24 +93,24 @@ export const Header = () => {
                         </NavigationMenuContent>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                        <NavigationMenuTrigger className="border-transparent hover:border-primary border font-montserrat font-bold text-xl data-[active]:bg-zinc-900 data-[state=open]:bg-zinc-900">
+                        <NavigationMenuTrigger className="border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
                             Configurações
                         </NavigationMenuTrigger>
                         <NavigationMenuContent>
-                            <div className="w-[400px] h-[350px] p-2 bg-zinc-800 border-2 border-zinc-900 flex flex-col gap-2 items-center ">
-                                <div className="w-full  bg-zinc-900 rounded flex  p-4 flex-row flex-wrap gap-4">
-                                    <div className="bg-zinc-800 p-4 rounded w-full ">
+                            <div className="w-[400px] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
+                                <div className="w-full  dark:bg-zinc-900 bg-zinc-400 rounded flex  p-4 flex-row flex-wrap gap-4">
+                                    <div className="dark:bg-zinc-800 bg-zinc-300 p-4 rounded w-full ">
                                         <Label>Trocar tema: </Label>
                                         <SwitchTheme />
                                     </div>
-                                    <div className="bg-zinc-800 p-4 rounded w-full ">
+                                    <div className="dark:bg-zinc-800 bg-zinc-300 p-4 rounded w-full ">
                                         <Label>Outra configuração: </Label>
                                     </div>
                                 </div>
                                 <Separator className="bg-zinc-700 w-full" />
                                 <Button
                                     variant={"ghost"}
-                                    className="w-full bg-zinc-700 hover:bg-zinc-700 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                    className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
                                 >
                                     <Hammer className="mr-4" />
                                     Suporte
