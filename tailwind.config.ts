@@ -66,7 +66,6 @@ module.exports = {
                     from: { height: "var(--radix-accordion-content-height)" },
                     to: { height: 0 },
                 },
-                
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
@@ -79,6 +78,7 @@ module.exports = {
                 "3xlDark": "0 -10px 300px 10px #4a1b7a",
                 "4xlight": "0 -10px 300px 10px #a64fff",
                 shadowButton: "0 0px 10px 0.1px #a95afa",
+                shadowIcon: "0 0px 50px 1px #4a1b7a",
             },
         },
     },

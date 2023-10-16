@@ -23,7 +23,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Coffee, DoorOpen, Hammer, Home, Newspaper, User2 } from "lucide-react";
+import {
+    Coffee,
+    DoorOpen,
+    Hammer,
+    Home,
+    Newspaper,
+    Settings,
+    User2,
+} from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { SwitchTheme } from "../switchTheme";
 import { useRouter } from "next/navigation";
@@ -81,9 +89,9 @@ export const Header = () => {
                             <NavigationMenuTrigger className="w-full border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
                                 Navegar
                             </NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                                <div className="sm:w-[400px] w-[92vw] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
-                                    <div className="w-full h-[150px]  bg-gradient-to-t dark:from-zinc-900 dark:to-primary from-zinc-400 dark:from-10% from-2% to-primary rounded flex items-center p-4 flex-row gap-4">
+                            <NavigationMenuContent className="dark:border-zinc-900 border-zinc-700 dark:border">
+                                <div className="sm:w-[400px] w-[92vw] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2  flex flex-col gap-2 items-center ">
+                                    <div className="w-full h-[150px]  bg-gradient-to-t dark:from-zinc-900 dark:to-primary from-zinc-200 dark:from-10% from-2% to-primary rounded flex items-center p-4 flex-row gap-4">
                                         <Image
                                             alt="logo do hexpost"
                                             src={logo}
@@ -103,21 +111,22 @@ export const Header = () => {
                                     <Separator className="dark:bg-zinc-700 bg-zinc-400 w-full" />
                                     <Button
                                         variant={"ghost"}
-                                        className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                        className="w-full dark:bg-zinc-700 bg-zinc-200 dark:hover:bg-zinc-700 hover:bg-zinc-200 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                        onClick={() => router.push("/")}
                                     >
                                         <Home className="mr-4" />
                                         Pagina inicial
                                     </Button>
                                     <Button
                                         variant={"ghost"}
-                                        className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                        className="w-full dark:bg-zinc-700 bg-zinc-200 dark:hover:bg-zinc-700 hover:bg-zinc-200 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
                                     >
                                         <Newspaper className="mr-4" />
                                         Novidades
                                     </Button>
                                     <Button
                                         variant={"ghost"}
-                                        className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                        className="w-full dark:bg-zinc-700 bg-zinc-200 dark:hover:bg-zinc-700 hover:bg-zinc-200 border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
                                     >
                                         <User2 className="mr-4" />{" "}
                                         Contribuidores
@@ -129,19 +138,18 @@ export const Header = () => {
                             <NavigationMenuTrigger className="w-full border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
                                 Conteudo
                             </NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                                <div className="sm:w-[400px] w-[92vw] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
-                                    <Separator className="bg-zinc-700 w-full" />
+                            <NavigationMenuContent className="dark:border-zinc-900 border-zinc-700 dark:border">
+                                <div className="sm:w-[400px] w-[92vw] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300  flex flex-col gap-2 items-center ">
                                     <Button
                                         variant={"ghost"}
-                                        className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                        className="w-full dark:bg-zinc-700 bg-zinc-200 dark:hover:bg-zinc-700 hover:bg-zinc-200 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
                                     >
-                                        <Hammer className="mr-4" />
+                                        <Settings className="mr-4" />
                                         Rust
                                     </Button>
                                     <Button
                                         variant={"ghost"}
-                                        className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                        className="w-full dark:bg-zinc-700 bg-zinc-200 dark:hover:bg-zinc-700 hover:bg-zinc-200 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
                                     >
                                         <Coffee className="mr-4" />
                                         Java
@@ -153,12 +161,11 @@ export const Header = () => {
                             <NavigationMenuTrigger className="w-full border-transparent hover:border-primary border font-montserrat font-bold text-xl dark:data-[active]:bg-zinc-900 data-[active]:bg-zinc-200 dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-zinc-200">
                                 Sobre
                             </NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                                <div className="sm:w-[400px] w-[92vw] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 dark:border-zinc-900 border-zinc-700 dark:border flex flex-col gap-2 items-center ">
-                                    <Separator className="bg-zinc-700 w-full" />
+                            <NavigationMenuContent className="dark:border-zinc-900 border-zinc-700 dark:border">
+                                <div className="sm:w-[400px] w-[92vw] h-[350px] p-2 dark:bg-zinc-800 bg-zinc-300 border-2 flex flex-col gap-2 items-center ">
                                     <Button
                                         variant={"ghost"}
-                                        className="w-full dark:bg-zinc-700 bg-zinc-400 dark:hover:bg-zinc-700 hover:bg-zinc-400 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
+                                        className="w-full dark:bg-zinc-700 bg-zinc-200 dark:hover:bg-zinc-700 hover:bg-zinc-200 border border-transparent hover:border-primary font-montserrat font-bold text-lg py-6"
                                     >
                                         Quem somos?
                                     </Button>
