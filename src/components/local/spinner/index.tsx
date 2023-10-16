@@ -1,6 +1,10 @@
-export const Spinner = () => {
+interface IProps {
+    className: string
+}
+
+export const Spinner = ({className}: IProps) => {
     return (
-        <div className="">
+        <div className={className}>
             <div role="status">
                 <svg
                     aria-hidden="true"
